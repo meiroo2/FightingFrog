@@ -18,8 +18,14 @@ public class Stick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     private Vector2 newPos;
 
     public GameObject m_SANS;
+    public Vector2 m_DirectVec;
+
+    private Player m_Player;
 
     private bool isDragging = false;
+
+    public GameObject m_RightView;
+    public GameObject m_LeftView;
 
     private void Awake()
     {
@@ -27,18 +33,22 @@ public class Stick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
         m_OriginalPos = rectTransform.anchoredPosition;
         oldPos = m_OriginalPos;
         newPos = m_OriginalPos;
+
+        m_Player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     private void FixedUpdate()
     {
         if (isDragging)
         {
-            m_SANS.transform.Translate(-(m_OriginalPos - lever.anchoredPosition) / 1000f);
+            m_DirectVec = -(m_OriginalPos - lever.anchoredPosition).normalized;
+            m_SANS.transform.Translate(-(m_OriginalPos - lever.anchoredPosition) / 700f);
         }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        m_Player.changeState(true);
         isDragging = true;
 
         // var inputDir = eventData.position - rectTransform.anchoredPosition;
@@ -58,6 +68,7 @@ public class Stick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
 
     public void OnDrag(PointerEventData eventData)
     {
+
         //var inputDir = eventData.position - rectTransform.anchoredPosition;
 
         // var clampedDir = inputDir.magnitude < leverRange ? inputDir : inputDir.normalized * leverRange;
@@ -72,10 +83,22 @@ public class Stick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
         {
             lever.anchoredPosition = oldPos;
         }
+
+        if(lever.anchoredPosition.x > 50)
+        {
+            m_RightView.SetActive(true);
+            m_LeftView.SetActive(false);
+        }
+        else
+        {
+            m_RightView.SetActive(false);
+            m_LeftView.SetActive(true);
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        m_Player.changeState(false);
         isDragging = false;
         lever.anchoredPosition = m_OriginalPos;
     }

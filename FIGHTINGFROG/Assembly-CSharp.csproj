@@ -60,6 +60,9 @@
     <Compile Include="Assets\WEED.cs" />
     <Compile Include="Assets\Stick.cs" />
     <Compile Include="Assets\vinicius develops\Wobble Effect\WaterCamera.cs" />
+    <Compile Include="Assets\Player.cs" />
+    <Compile Include="Assets\Rock.cs" />
+    <Compile Include="Assets\PosRock.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\vinicius develops\Wobble Effect\Shaders\Sprite-WobbleFx.shader" />
