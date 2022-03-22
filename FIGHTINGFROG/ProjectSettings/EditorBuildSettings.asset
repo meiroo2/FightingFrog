@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/vinicius develops/Wobble Effect/Sample Scene/Sample.unity
+    guid: 62b3df4effae0e849a9facb281885e8d
   m_configObjects: {}

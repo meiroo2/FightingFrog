@@ -14,6 +14,9 @@ public class Stick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
 
     private Vector2 m_OriginalPos;
 
+    private Vector2 oldPos;
+    private Vector2 newPos;
+
     public GameObject m_SANS;
 
     private bool isDragging = false;
@@ -22,6 +25,8 @@ public class Stick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     {
         rectTransform = GetComponent<RectTransform>();
         m_OriginalPos = rectTransform.anchoredPosition;
+        oldPos = m_OriginalPos;
+        newPos = m_OriginalPos;
     }
 
     private void FixedUpdate()
@@ -35,27 +40,38 @@ public class Stick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     public void OnBeginDrag(PointerEventData eventData)
     {
         isDragging = true;
-        var inputDir = eventData.position - rectTransform.anchoredPosition;
-        //추가
-        var clampedDir = inputDir.magnitude < leverRange ?
-            inputDir : inputDir.normalized * leverRange;
 
-        //lever.anchoredPosition = inputDir;
+        // var inputDir = eventData.position - rectTransform.anchoredPosition;
 
-        lever.anchoredPosition = eventData.position;
-        //lever.anchoredPosition = clampedDir;    // 변경
-        
+        //var clampedDir = inputDir.magnitude < leverRange ? inputDir : inputDir.normalized * leverRange;
+        newPos = eventData.position;
+        if (Vector2.Distance(newPos, m_OriginalPos) < 50f)
+        {
+            lever.anchoredPosition = eventData.position;
+            oldPos = newPos;
+        }
+        else
+        {
+            lever.anchoredPosition = oldPos;
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        var inputDir = eventData.position - rectTransform.anchoredPosition;
-        // 추가
-        var clampedDir = inputDir.magnitude < leverRange ? inputDir : inputDir.normalized * leverRange;
+        //var inputDir = eventData.position - rectTransform.anchoredPosition;
 
-        lever.anchoredPosition = eventData.position;
-        //lever.anchoredPosition = inputDir;
-        //lever.anchoredPosition = clampedDir;    // 변경
+        // var clampedDir = inputDir.magnitude < leverRange ? inputDir : inputDir.normalized * leverRange;
+
+        newPos = eventData.position;
+        if (Vector2.Distance(newPos, m_OriginalPos) < 50f)
+        {
+            lever.anchoredPosition = eventData.position;
+            oldPos = newPos;
+        }
+        else
+        {
+            lever.anchoredPosition = oldPos;
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
