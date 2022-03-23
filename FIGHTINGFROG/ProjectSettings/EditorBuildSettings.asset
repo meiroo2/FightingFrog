@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/vinicius develops/Wobble Effect/Sample Scene/Sample.unity
-    guid: 62b3df4effae0e849a9facb281885e8d
+    path: Assets/Scene/MJ/MJ.unity
+    guid: 3dc1b786dc070ba4aaae42c43c9c62b9
   m_configObjects: {}

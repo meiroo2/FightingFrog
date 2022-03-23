@@ -27,6 +27,8 @@ public class Stick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     public GameObject m_RightView;
     public GameObject m_LeftView;
 
+    public float StickLimit = 150f;
+
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -42,7 +44,7 @@ public class Stick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
         if (isDragging)
         {
             m_DirectVec = -(m_OriginalPos - lever.anchoredPosition).normalized;
-            m_SANS.transform.Translate(-(m_OriginalPos - lever.anchoredPosition) / 700f);
+            m_SANS.transform.Translate(-(m_OriginalPos - lever.anchoredPosition) / 900f);
         }
     }
 
@@ -54,15 +56,14 @@ public class Stick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
         // var inputDir = eventData.position - rectTransform.anchoredPosition;
 
         //var clampedDir = inputDir.magnitude < leverRange ? inputDir : inputDir.normalized * leverRange;
-        newPos = eventData.position;
-        if (Vector2.Distance(newPos, m_OriginalPos) < 50f)
+        if (Vector2.Distance(eventData.position, m_OriginalPos) < StickLimit)
         {
             lever.anchoredPosition = eventData.position;
-            oldPos = newPos;
         }
         else
         {
-            lever.anchoredPosition = oldPos;
+            Vector2 temp = (m_OriginalPos - eventData.position).normalized * (StickLimit - 1f);
+            lever.anchoredPosition = temp;
         }
     }
 
@@ -73,18 +74,31 @@ public class Stick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
 
         // var clampedDir = inputDir.magnitude < leverRange ? inputDir : inputDir.normalized * leverRange;
 
-        newPos = eventData.position;
-        if (Vector2.Distance(newPos, m_OriginalPos) < 50f)
+        if (Vector2.Distance(eventData.position, m_OriginalPos) < StickLimit)
         {
             lever.anchoredPosition = eventData.position;
-            oldPos = newPos;
+            oldPos = lever.anchoredPosition;
         }
         else
         {
-            lever.anchoredPosition = oldPos;
+            Vector2 temp = (eventData.position - m_OriginalPos).normalized * (StickLimit - 1f);
+            temp.x += m_OriginalPos.x;
+            temp.y += m_OriginalPos.y;
+
+            /*
+            if(oldPos.x < 50f)
+            {
+                oldPos.x = -oldPos.x;
+            }
+            if(oldPos.y < 50f)
+            {
+                oldPos.y = -oldPos.y;
+            }
+            */
+            lever.anchoredPosition = temp;
         }
 
-        if(lever.anchoredPosition.x > 50)
+        if (lever.anchoredPosition.x > m_OriginalPos.x)
         {
             m_RightView.SetActive(true);
             m_LeftView.SetActive(false);

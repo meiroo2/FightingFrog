@@ -56,13 +56,18 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\PosRock.cs" />
+    <Compile Include="Assets\Lobster.cs" />
     <Compile Include="Assets\vinicius develops\Wobble Effect\Sample Scene\CameraController.cs" />
+    <Compile Include="Assets\Rock.cs" />
+    <Compile Include="Assets\Bound.cs" />
+    <Compile Include="Assets\PushableFishAss.cs" />
     <Compile Include="Assets\WEED.cs" />
     <Compile Include="Assets\Stick.cs" />
+    <Compile Include="Assets\CollectableCoin.cs" />
     <Compile Include="Assets\vinicius develops\Wobble Effect\WaterCamera.cs" />
     <Compile Include="Assets\Player.cs" />
-    <Compile Include="Assets\Rock.cs" />
-    <Compile Include="Assets\PosRock.cs" />
+    <Compile Include="Assets\OldMan.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\vinicius develops\Wobble Effect\Shaders\Sprite-WobbleFx.shader" />

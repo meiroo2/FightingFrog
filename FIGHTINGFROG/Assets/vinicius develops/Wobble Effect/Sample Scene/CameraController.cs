@@ -1,26 +1,29 @@
 ﻿using UnityEngine;
 
-namespace vnc.FX
+public class CameraController : MonoBehaviour
 {
-    public class CameraController : MonoBehaviour
+    public WaterCamera waterCamera;
+    public Transform Player;
+    public float[] BlockCamPos;
+    public int GameLv = 1;
+
+    private Vector3 camPos;
+
+
+    private void Update()
     {
-        public WaterCamera waterCamera;
-        public float minHeight = 20;
+        waterCamera.effectActive = true;
 
-        private void Update()
+        if (BlockCamPos.Length >= GameLv)
         {
-            /*
-            float yAxis = transform.position.y;
-            yAxis += Input.GetKey(KeyCode.UpArrow) ? 1 : 0;
-            yAxis -= Input.GetKey(KeyCode.DownArrow) ? 1 : 0;
-            yAxis = Mathf.Clamp(yAxis, 10, 40);
-            transform.position = Vector3.up * yAxis;
-
-            waterCamera.effectActive = transform.position.y < minHeight;
-            */
-            waterCamera.effectActive = true;
+            camPos.x = Player.position.x;
+            camPos.y = Player.position.y;
+            camPos.z = 0f;
+            if (BlockCamPos[GameLv - 1] < camPos.y)
+                camPos.y = BlockCamPos[GameLv - 1] - 0.1f;
         }
 
+        transform.position = camPos;
     }
-}
 
+}

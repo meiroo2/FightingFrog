@@ -39,7 +39,7 @@ Material:
     - _Speed: 0
     m_Colors:
     - <noninit>: {r: 0, g: 2.0183642, b: 1e-45, a: -4.391475e+37}
-    - _Color: {r: 0, g: 0.43529412, b: 0.6156863, a: 1}
+    - _Color: {r: 0.38431373, g: 0.81960785, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
